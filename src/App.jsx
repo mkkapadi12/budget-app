@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { logoutActions } from "./Actions/logout";
 
 // Routes
-import Dashboard, { dashboardLoader } from "./Pages/DashBoard";
+import Dashboard, { DashboardAction, dashboardLoader } from "./Pages/DashBoard";
 import Error from "./Pages/Error";
 
 const router = createBrowserRouter([
@@ -25,6 +25,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+        action: DashboardAction,
         loader: dashboardLoader,
       },
       {
