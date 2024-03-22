@@ -1,10 +1,15 @@
+//rrd library
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Layouts
 import Main, { MainLoader } from "./Layouts/Main";
 
+//recat tostify Library
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // Actions
-// import { logoutAction } from "./actions/logout";
+import { logoutActions } from "./Actions/logout";
 
 // Routes
 import Dashboard, { dashboardLoader } from "./Pages/DashBoard";
@@ -22,10 +27,10 @@ const router = createBrowserRouter([
         element: <Dashboard />,
         loader: dashboardLoader,
       },
-      // {
-      //   path : "about",
-      //   element : <About/>
-      // }
+      {
+        path: "logout",
+        action: logoutActions,
+      },
     ],
   },
   {
@@ -34,12 +39,13 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <RouterProvider router={router} />
+      <ToastContainer />
     </div>
   );
-}
+};
 
 export default App;
