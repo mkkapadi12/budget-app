@@ -25,6 +25,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+        errorElement: <Error />,
         action: DashboardAction,
         loader: dashboardLoader,
       },
@@ -34,10 +35,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "*",
-    element: <Error />,
-  },
+  // {
+  //   path: "*",
+  //   element: <Error />,
+  // },
 ]);
 
 const App = () => {

@@ -5,6 +5,7 @@ import { fetchData } from "../Helper/Helper";
 //svg
 import wave from "../assets/wave.svg";
 import Nav from "../Components/Nav";
+import Error from "../Pages/Error";
 // loader
 
 export const MainLoader = () => {
