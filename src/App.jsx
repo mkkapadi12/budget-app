@@ -14,6 +14,7 @@ import { logoutActions } from "./Actions/logout";
 // Routes
 import Dashboard, { DashboardAction, dashboardLoader } from "./Pages/DashBoard";
 import Error from "./Pages/Error";
+import Expenses, { expensesLoader } from "./Pages/Expenses";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
         errorElement: <Error />,
         action: DashboardAction,
         loader: dashboardLoader,
+      },
+      {
+        path: "expenses",
+        element: <Expenses />,
+        loader: expensesLoader,
       },
       {
         path: "logout",

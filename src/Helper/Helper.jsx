@@ -1,5 +1,5 @@
 export const waait = () =>
-  new Promise((res) => setTimeout(res, Math.random() * 2000));
+  new Promise((res) => setTimeout(res, Math.random() * 800));
 
 const generateRandomColor = () => {
   const existingBudgetLength = fetchData("budgets")?.length ?? 0;
@@ -9,12 +9,6 @@ const generateRandomColor = () => {
 // Local storage
 export const fetchData = (key) => {
   return JSON.parse(localStorage.getItem(key));
-};
-
-//delete Item
-
-export const DeleteItem = (key) => {
-  return localStorage.removeItem(key);
 };
 
 //Create Budgets
@@ -53,14 +47,27 @@ export const CreateExpense = ({ name, amount, BudgetId }) => {
   );
 };
 
+//Delete an item from local storage
+
+export const deleteItem = ({ key, id }) => {
+  const existingData = fetchData("expense");
+  // console.log(existingData);
+  if (id) {
+    const newData = existingData.filter((item) => item.id !== id);
+    // console.log(newData);
+    return localStorage.setItem(key, JSON.stringify(newData));
+  }
+  return localStorage.removeItem(key);
+};
+
 // total spent by budget
 export const calculateSpentByBudget = (budgetId) => {
   const expenses = fetchData("expense") ?? [];
-  console.log(expenses);
+  // console.log(expenses);
   const budgetSpent = expenses.reduce((total, amt) => {
     // check if expense.id === budgetId I passed in
     if (amt.BudgetId !== budgetId) {
-      console.log(total);
+      // console.log(total);
       return total;
     }
     // add the current amount to my total
@@ -85,4 +92,18 @@ export const formatPercentage = (amt) => {
     style: "percent",
     minimumFractionDigits: 0,
   });
+};
+
+//formate Date
+
+export const formateDate = (epoch) => {
+  return new Date(epoch).toLocaleDateString();
+};
+
+//get All item from local storage
+
+export const getAllmatchingItem = ({ category, key, value }) => {
+  const data = fetchData(category) ?? [];
+  // console.log(data);
+  return data.filter((item) => item[key] === value);
 };

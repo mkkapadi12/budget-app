@@ -1,10 +1,11 @@
 // rrd imports
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 //  helper functions
 import {
   CreateBudget,
   CreateExpense,
+  deleteItem,
   fetchData,
   waait,
 } from "../Helper/Helper";
@@ -15,12 +16,14 @@ import { toast } from "react-toastify";
 import AddBudgetForm from "../Components/AddBudgetForm";
 import AddExpenseForm from "../Components/AddExpenseForm";
 import BudgetItem from "../Components/BudgetItem";
+import Table from "../Components/Table";
 
 // loader
 export function dashboardLoader() {
   const userName = fetchData("userName");
   const budgets = fetchData("budgets");
-  return { userName, budgets };
+  const expense = fetchData("expense");
+  return { userName, budgets, expense };
 }
 
 //action
@@ -42,9 +45,9 @@ export const DashboardAction = async ({ request }) => {
     }
   }
 
+  // create Budget;
   if (_action === "createBudget") {
     try {
-      // create Budget;
       CreateBudget({
         name: values.newBudget,
         amount: values.newBudgetAmount,
@@ -55,10 +58,9 @@ export const DashboardAction = async ({ request }) => {
     }
   }
 
+  // create an Expense
   if (_action === "createExpense") {
     try {
-      // create an Expense
-
       CreateExpense({
         name: values.newExpense,
         amount: values.newExpenseAmount,
@@ -69,10 +71,23 @@ export const DashboardAction = async ({ request }) => {
       throw new Error("There was a problem creating your new Expense");
     }
   }
+
+  // delete an Expense
+  if (_action === "deleteExpense") {
+    try {
+      deleteItem({
+        key: "expense",
+        id: values.expenseId,
+      });
+      return toast.success(`Expense deleted !`);
+    } catch (error) {
+      throw new Error("There was a problem deleting your Expense");
+    }
+  }
 };
 
 const Dashboard = () => {
-  const { userName, budgets } = useLoaderData();
+  const { userName, budgets, expense } = useLoaderData();
 
   return (
     <>
@@ -93,6 +108,23 @@ const Dashboard = () => {
                       return <BudgetItem key={budget.id} budgets={budget} />;
                     })}
                   </div>
+                  {expense && expense.length > 0 ? (
+                    <div className="grid-md">
+                      <h2>Recent Expenses</h2>
+                      <Table
+                        expense={expense
+                          .sort((a, b) => b.createdAt - a.createdAt)
+                          .slice(0, 5)}
+                      />
+                      {expense.length > 5 && (
+                        <Link to="expenses" className="btn btn--dark">
+                          View All Expenses
+                        </Link>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="name"></div>
+                  )}
                 </div>
               </div>
             ) : (
