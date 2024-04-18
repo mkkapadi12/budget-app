@@ -50,7 +50,7 @@ export const CreateExpense = ({ name, amount, BudgetId }) => {
 //Delete an item from local storage
 
 export const deleteItem = ({ key, id }) => {
-  const existingData = fetchData("expense");
+  const existingData = fetchData(key);
   // console.log(existingData);
   if (id) {
     const newData = existingData.filter((item) => item.id !== id);

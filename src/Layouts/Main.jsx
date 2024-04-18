@@ -4,8 +4,9 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import { fetchData } from "../Helper/Helper";
 //svg
 import wave from "../assets/wave.svg";
+//Components
 import Nav from "../Components/Nav";
-import Error from "../Pages/Error";
+// import Error from "../Pages/Error";
 // loader
 
 export const MainLoader = () => {
