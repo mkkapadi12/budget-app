@@ -17,6 +17,7 @@ import AddBudgetForm from "../Components/AddBudgetForm";
 import AddExpenseForm from "../Components/AddExpenseForm";
 import BudgetItem from "../Components/BudgetItem";
 import Table from "../Components/Table";
+import { useEffect } from "react";
 
 // loader
 export function dashboardLoader() {
@@ -88,6 +89,12 @@ export const DashboardAction = async ({ request }) => {
 
 const Dashboard = () => {
   const { userName, budgets, expense } = useLoaderData();
+
+  if (userName) {
+    useEffect(() => {
+      document.title = userName + " Home Budget";
+    }, [userName]);
+  }
 
   return (
     <>

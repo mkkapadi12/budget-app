@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 //helper
 import {
   CreateExpense,
@@ -71,6 +71,13 @@ export const budgetAction = async ({ request }) => {
 
 const Budget = () => {
   const { budget, expense } = useLoaderData();
+
+  let title = document.title;
+
+  useEffect(() => {
+    document.title = `${title} - ${budget.name}`;
+  }, []);
+
   return (
     <>
       <div
